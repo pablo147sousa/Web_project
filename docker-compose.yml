@@ -1,0 +1,8 @@
+services:
+  app:
+    image: <pablo>:0.1.0
+    build:
+      context: .
+      tags:
+        - <pablo>:0.1.0
+    env_file: .env
