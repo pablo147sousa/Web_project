@@ -1,0 +1,33 @@
+body {
+    background: #d1cbab;
+    font: Arial, Helvetica, sans-serif;
+}
+
+#main {
+    width: 900px;
+}
+
+#menu {
+    background-color: #dcf0f2;
+    padding: 18px;
+}
+
+a {
+    color: #4b566a;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 2px;
+}
+
+#content {
+    background: #d1cbab;
+    padding: 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+.img_camp {
+    border: 10px solid #c3c3ae;
+}

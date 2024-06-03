@@ -1,0 +1,38 @@
+<!-- layout.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ArtigosAPP{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Artigos</h1>
+        <div id="menu">
+            <a href="{% url 'artigos:index' %}">HOME</a>
+        {% if user.is_authenticated %}
+            <p>Olá, {{ user.username }}!</p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Registrar</a>
+        {% endif %}
+
+        </div>
+    </header>
+
+    <main>
+        <!-- Aqui será incluído o conteúdo específico de cada página -->
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Aqui você pode adicionar o rodapé comum a todas as páginas -->
+        <p>&copy; Artigos APP.</p>
+    </footer>
+</body>
+</html>

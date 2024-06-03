@@ -1,0 +1,44 @@
+<!-- article.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+    <nav>
+        <h2><a href="{% url 'artigos:index' %}">Voltar</a></h2>
+    </nav>
+    <h1>{{ article.titulo }}</h1>
+    <p>Autor: <a href="{% url 'artigos:autor' autor_id=article.autor.id %}">{{ article.autor }}</a></p>
+    <p>Data de criação: {{ article.data_criacao|date:"d/m/Y H:i:s" }}</p>
+    <p>Conteúdo:</p>
+    <p>{{ article.conteudo }}</p>
+
+    <h2>Comentários</h2>
+    {% if comments %}
+    <ul>
+        {% for comment in comments %}
+        <li>{{ comment.autor }} - {{ comment.data_criacao|date:"d/m/Y H:i:s" }}</li>
+        <p>{{ comment.conteudo }}</p>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Nenhum comentário disponível.</p>
+    {% endif %}
+    <br>
+    <br>
+    <a href="{% url 'artigos:edita_artigo' article.id %}">
+        <button>Editar informação do Artigo</button>
+    </a>
+    <h2>Avaliações</h2>
+    {% if rating %}
+    <ul>
+        {% for rating in rating %}
+        <li>{{ rating.autor }} - {{ rating.data_criacao|date:"d/m/Y H:i:s" }} - Pontuação: {{ rating.pontuacao }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Nenhuma avaliação disponível.</p>
+    {% endif %}
+    <a href="{% url 'artigos:apaga_artigo' article.id %}">
+      <button>Apagar Artigo</button>
+    </a>
+
+{% endblock %}

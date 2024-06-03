@@ -1,0 +1,28 @@
+<!-- autor.html -->
+{% extends "layout.html" %}
+
+{% block title %}{{ autor.nome }}{% endblock %}
+
+{% block content %}
+    <a href="{% url 'artigos:edita_autor' autor.id %}">
+        <button>Editar informação do Autor</button>
+    </a>
+    <h1>{{ autor.nome }}</h1>
+    <p><strong>Bio:</strong> {{ autor.bio }}</p>
+    <nav>
+    <h2>Artigos relacionados:</h2>
+    <ul>
+        {% for artigo in artigos %}
+            <li><a href="{% url 'artigos:article' artigo.id %}">{{ artigo.titulo }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'artigos:novo_artigo' autor.id %}">
+        <button>Inserir novo Artigo</button>
+    </a>
+    <br>
+    <br>
+    <a href="{% url 'artigos:apaga_autor' autor.id %}">
+      <button>Apagar autor e seus artigos</button>
+    </a>
+</nav>
+{% endblock %}
