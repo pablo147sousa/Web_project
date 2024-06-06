@@ -11,17 +11,16 @@
 <body>
     <header>
         <h1>Artigos</h1>
-        <div id="menu">
+        <nav id="menu">
             <a href="{% url 'artigos:index' %}">HOME</a>
-        {% if user.is_authenticated %}
-            <p>Olá, {{ user.username }}!</p>
-            <a href="{% url 'logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'register' %}">Registrar</a>
-        {% endif %}
-
-        </div>
+            {% if user.is_authenticated %}
+                <p>Olá, {{ user.username }}!</p>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Registrar</a>
+            {% endif %}
+        </nav>
     </header>
 
     <main>
@@ -32,7 +31,7 @@
 
     <footer>
         <!-- Aqui você pode adicionar o rodapé comum a todas as páginas -->
-        <p>&copy; Artigos APP.</p>
+        <p></p>
     </footer>
 </body>
 </html>

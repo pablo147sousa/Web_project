@@ -1,14 +1,17 @@
 <!-- index.html -->
-{% extends 'layout.html' %}
+{% extends 'artigos/layout.html' %}
 
 {% block content %}
 <a href="{% url 'artigos:novo_autor' %}">
-        <button>Inserir novo Autor</button>
+    <button>Inserir novo Autor</button>
 </a>
 <h1>Lista de Artigos</h1>
 <ul>
     {% for artigo in artigos %}
     <li><a href="{% url 'artigos:article' article_id=artigo.id %}">{{ artigo.titulo }}</a> - {{ artigo.autor }} - {{ artigo.data_criacao|date:"d/m/Y" }}</li>
+    {% empty %}
+    <li>Nenhum artigo encontrado.</li>
     {% endfor %}
 </ul>
 {% endblock %}
+
