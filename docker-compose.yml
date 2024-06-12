@@ -1,8 +1,47 @@
 services:
-  app:
-    image: <pablo>:0.1.0
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+  
+  web-proj:
+    container_name: web-project
+    image: web-project:latest
     build:
       context: .
+      dockerfile: Dockerfile
       tags:
-        - <pablo>:0.1.0
+        - web-project:0.1.0
+    restart: unless-stopped
     env_file: .env
+    ports:
+      - 8000:8000
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+
+  database:
+    image: postgres:16.3-alpine3.20
+    container_name: database
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    environment:
+      # for demo purposes only
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: web_project
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_interval: 10s
+
+volumes:
+  db_data:
