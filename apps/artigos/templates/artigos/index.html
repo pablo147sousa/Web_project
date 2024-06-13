@@ -2,9 +2,18 @@
 {% extends 'artigos/layout.html' %}
 
 {% block content %}
-<a href="{% url 'artigos:novo_autor' %}">
-    <button>Inserir novo Autor</button>
-</a>
+{% if user.is_authenticated %}
+    {% if has_author %}
+        <a href="{% url 'artigos:edita_autor' autor.id %}">
+            <button>Editar informação do Autor</button>
+        </a>
+    {% else %}
+        <a href="{% url 'artigos:novo_autor' %}">
+            <button>Torne-se um Autor</button>
+        </a>
+    {% endif %}
+{% endif %}
+
 <h1>Lista de Artigos</h1>
 <ul>
     {% for artigo in artigos %}

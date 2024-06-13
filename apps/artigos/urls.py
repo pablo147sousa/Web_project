@@ -17,4 +17,7 @@ urlpatterns = [
     path('autor/<int:autor_id>/adiciona', views.novo_artigo_view,name="novo_artigo"),
     path('info/<int:article_id>/edita', views.edit_article_view, name='edita_artigo'),
     path('info/<int:article_id>/apaga', views.apaga_artigo_view,name="apaga_artigo"),
+    # Interações 
+    path('artigo/<int:artigo_id>/comentar/', views.comment_article, name='comentar_artigo'),
+    path('artigo/<int:artigo_id>/avaliar/', views.rate_article, name='avaliar_artigo'),
 ]

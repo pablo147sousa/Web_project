@@ -1,10 +1,13 @@
 <!-- article.html -->
-{% extends 'layout.html' %}
+{% extends 'artigos/layout.html' %}
 
 {% block content %}
     <nav>
         <h2><a href="{% url 'artigos:index' %}">Voltar</a></h2>
     </nav>
+    {% if is_author %}
+    <a href="{% url 'edit_article_view' artigo.id %}">Editar Artigo</a>
+    {% endif %}
     <h1>{{ article.titulo }}</h1>
     <p>Autor: <a href="{% url 'artigos:autor' autor_id=article.autor.id %}">{{ article.autor }}</a></p>
     <p>Data de criação: {{ article.data_criacao|date:"d/m/Y H:i:s" }}</p>
@@ -12,6 +15,13 @@
     <p>{{ article.conteudo }}</p>
 
     <h2>Comentários</h2>
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'comment_article' artigo.id %}">
+        {% csrf_token %}
+        {{ comentario_form.as_p }}
+        <button type="submit">Comentar</button>
+    </form>
+    {% endif %}
     {% if comments %}
     <ul>
         {% for comment in comments %}
@@ -20,14 +30,18 @@
         {% endfor %}
     </ul>
     {% else %}
-    <p>Nenhum comentário disponível.</p>
+    <p>Nenhum comentário disponível. Faça login e seja o primeiro a comentar</p>
     {% endif %}
     <br>
     <br>
-    <a href="{% url 'artigos:edita_artigo' article.id %}">
-        <button>Editar informação do Artigo</button>
-    </a>
     <h2>Avaliações</h2>
+    {%if user.is_authenticated%}
+    <form method="post" action="{% url 'rate_article' artigo.id %}">
+        {% csrf_token %}
+        {{ avaliacao_form.as_p }}
+        <button type="submit">Avaliar</button>
+    </form>
+    {% endif %}
     {% if rating %}
     <ul>
         {% for rating in rating %}

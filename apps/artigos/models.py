@@ -3,9 +3,12 @@ from django.contrib.auth.models import User
 
 
 class Autor(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     bio = models.TextField()
 
+    def get_autor(self):
+        return Autor.id # type: ignore
+    
     def __str__(self):
         return f"{self.user.username}"
 

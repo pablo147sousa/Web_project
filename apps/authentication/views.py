@@ -10,19 +10,15 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            next_url = request.POST.get('next')
-            if next_url:
-                return redirect(next_url)
-            return redirect('portfolio:index')
+            return redirect('artigos:index')
     else:
         form = AuthenticationForm()
-        next_url = request.GET.get('next', '')
 
-    return render(request, 'authentication/login.html', {'form': form, 'next': next_url})
+    return render(request, 'authentication/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
-    return redirect('pagina_inicial')
+    return render(request, 'authentication/logout.html')
 
 def registro_view(request):
     if request.method == 'POST':
@@ -30,7 +26,7 @@ def registro_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('portfolio:index')
+            return redirect('artigos:index')
     else:
         form = UserCreationForm()
 
