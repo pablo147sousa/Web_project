@@ -9,9 +9,13 @@ from .forms import AutorForm,ArtigoForm,ComentarioForm,AvaliacaoForm
 
 # Create your views here.
 def index_view(request):
+    has_author = bool(Autor.objects.get(user=request.user))
+    autor = Autor.objects.get(user=request.user)
     artigos = Artigo.objects.all()
     context = {
         'artigos': artigos,
+        'has_author':has_author,
+        'autor':autor,
     }
     return render(request, "artigos/index.html", context)
 
@@ -41,10 +45,6 @@ def autor_view(request, autor_id):
 
 @login_required
 def new_author_view(request):
-    try:
-        has_author = bool(Autor.objects.get(user= request.user))
-    except:
-        has_author = False
     if request.method == "POST":
         form = AutorForm(request.POST)
         if form.is_valid():
@@ -55,9 +55,9 @@ def new_author_view(request):
     else:
         form = AutorForm()
 
-    context = {'form': form,'has_author':has_author}
+    context = {'form': form,}
     return render(request, 'artigos/novo_autor.html', context)
-
+@login_required
 def edita_autor_view(request, autor_id):
     autor = Autor.objects.get(id=autor_id)
 
@@ -72,7 +72,7 @@ def edita_autor_view(request, autor_id):
     context = {'form': form, 'autor':autor}
     return render(request, 'artigos/edita_autor.html', context)
 
-
+@login_required
 def apaga_autor_view(request, autor_id):
     autor = Autor.objects.get(id=autor_id)
     autor.delete()
@@ -97,7 +97,7 @@ def novo_artigo_view(request):
     context = {'form': form}
     return render(request, 'artigos/novo_artigo.html', context)
 
-
+@login_required
 def edit_article_view(request, article_id):
     article = Artigo.objects.get(id=article_id)
     is_author = request.user == article.autor
@@ -112,7 +112,7 @@ def edit_article_view(request, article_id):
     context = {'form': form, 'article':article,'is_author': is_author,}
     return render(request, 'artigos/edita_artigo.html', context)
 
-
+@login_required
 def apaga_artigo_view(request, article_id):
     artigo = Artigo.objects.get(id=article_id)
     artigo.delete()

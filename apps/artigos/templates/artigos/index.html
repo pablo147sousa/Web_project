@@ -7,10 +7,12 @@
         <a href="{% url 'artigos:edita_autor' autor.id %}">
             <button>Editar informação do Autor</button>
         </a>
+        entrou
     {% else %}
         <a href="{% url 'artigos:novo_autor' %}">
             <button>Torne-se um Autor</button>
         </a>
+        falhou
     {% endif %}
 {% endif %}
 
