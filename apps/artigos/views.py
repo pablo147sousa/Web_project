@@ -6,11 +6,17 @@ from .models import Autor
 from .models import Comentario
 from .forms import AutorForm,ArtigoForm,ComentarioForm,AvaliacaoForm
 
-
 # Create your views here.
 def index_view(request):
-    has_author = bool(Autor.objects.get(user=request.user))
-    autor = Autor.objects.get(user=request.user)
+    if request.user.is_authenticated:
+        try:
+            has_author = Autor.objects.filter(user=request.user).exists()
+            autor = Autor.objects.get(user=request.user)
+        except Autor.DoesNotExist:
+            has_author = False
+    else:
+        autor = None
+        has_author = False
     artigos = Artigo.objects.all()
     context = {
         'artigos': artigos,
