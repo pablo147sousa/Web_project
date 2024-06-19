@@ -147,6 +147,9 @@ def rate_article(request, artigo_id):
             avaliacao.artigo = artigo
             avaliacao.autor = request.user
             avaliacao.save()
-            return redirect('article_view', artigo_id=artigo.id) # type: ignore
-
-    return redirect('article_view', artigo_id=artigo.id) # type: ignore
+            return redirect('artigos:article', artigo.id) # type: ignore
+    context={
+        'form': avaliacao_form,
+        'artigo': artigo,
+             }
+    return render(request,'artigos/nova_avaliacao.html',context)

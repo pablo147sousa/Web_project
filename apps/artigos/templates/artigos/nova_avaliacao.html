@@ -1,0 +1,17 @@
+{% extends 'artigos/layout.html' %}
+
+{% block content %}
+    <h3>Adicionar Avaliação a:</h3>
+    <h2>{{artigo.titulo}}</h2>
+    
+    <form action="" method="post" enctype='multipart/form-data'>
+    <!-- enctype deve ser definido se houver submissão de ficheiros ou imagens -->
+
+      {% csrf_token %}   <!-- obrigatório nos forms Django -->
+      <table>
+          {{ form }}   <!-- insere input para cada atributo da classe Autor, numa tabela -->
+      </table>
+      <input type="submit" value="Submeter avaliação"> 
+    </form>      
+
+{% endblock %}

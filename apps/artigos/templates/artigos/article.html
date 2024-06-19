@@ -45,7 +45,7 @@
     {% if ratings %}
     <ul>
         {% for rating in ratings %}
-        <li>{{ rating.autor }} - {{ rating.data_criacao|date:"d/m/Y H:i:s" }} - Pontuação: {{ rating.pontuacao }}</li>
+        <li>{{ rating.autor }} - {{ rating.data_avaliacao|date:"d/m/Y H:i:s" }} - Pontuação: {{ rating.pontuacao }}</li>
         {% endfor %}
     </ul>
     {% else %}
