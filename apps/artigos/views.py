@@ -23,11 +23,11 @@ def index_view(request):
 def article_view(request, article_id):
     article = get_object_or_404(Artigo, id=article_id)
     comments = Comentario.objects.filter(artigo=article_id)
-    rating = Avaliacao.objects.filter(artigo=article_id)
+    ratings = Avaliacao.objects.filter(artigo=article_id)
     context = {
         'article': article,
         'comments': comments,
-        'rating': rating,
+        'ratings': ratings,
     }
     return render(request, "artigos/article.html", context)
 
@@ -130,9 +130,12 @@ def comment_article(request, artigo_id):
             comentario.artigo = artigo
             comentario.autor = request.user
             comentario.save()
-            return redirect('article_view', artigo_id=artigo.id) # type: ignore
-
-    return redirect('article_view', artigo_id=artigo.id) # type: ignore
+            return redirect('artigos:article', artigo.id) # type: ignore
+    context={
+        'form': comentario_form,
+        'artigo': artigo,
+             }
+    return render(request,'artigos/novo_coment.html',context)
 
 @login_required
 def rate_article(request, artigo_id):

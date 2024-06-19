@@ -16,7 +16,7 @@
 
     <h2>Comentários</h2>
     {% if user.is_authenticated %}
-    <form method="post" action="{% url 'comment_article' artigo.id %}">
+    <form method="post" action="{% url 'artigos:comentar_artigo' article.id %}">
         {% csrf_token %}
         {{ comentario_form.as_p }}
         <button type="submit">Comentar</button>
@@ -36,15 +36,15 @@
     <br>
     <h2>Avaliações</h2>
     {%if user.is_authenticated%}
-    <form method="post" action="{% url 'rate_article' artigo.id %}">
+    <form method="post" action="{% url 'artigos:avaliar_artigo' article.id %}">
         {% csrf_token %}
         {{ avaliacao_form.as_p }}
         <button type="submit">Avaliar</button>
     </form>
     {% endif %}
-    {% if rating %}
+    {% if ratings %}
     <ul>
-        {% for rating in rating %}
+        {% for rating in ratings %}
         <li>{{ rating.autor }} - {{ rating.data_criacao|date:"d/m/Y H:i:s" }} - Pontuação: {{ rating.pontuacao }}</li>
         {% endfor %}
     </ul>
